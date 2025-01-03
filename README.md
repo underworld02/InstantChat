@@ -45,7 +45,7 @@
 ### 1、克隆项目
 
 ```bash
-git clone git@github.com:s/wechat.git
+git clone git@github.com:underworld02/InstantChat.git
 ```
 
 或者下载压缩包解压也可以。
@@ -178,8 +178,8 @@ npm start
 ## 交流
 - `E-mail`：`1069645184@qq.com`
 - `QQ`：`1069645184`
-- 微信：`cAutg9248`
+- 微信：`Shiokazego`
 
 ## 参考项目
 
-- https://github.com/wuyawei
+- https://github.com/underworld02
