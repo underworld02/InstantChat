@@ -1,0 +1,39 @@
+.login-page {
+  $color: #fff;
+  position: relative;
+  height: 100%;
+  background-image: url('/images/2.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  * {
+    background-color: transparent !important;
+    color: $color !important;
+  }
+  .wrapper {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 400px;
+    padding: 10px 30px;
+    background: linear-gradient(230deg,rgba(53,57,74,0),#000);
+    transform: translate(-50%, -50%);
+    .header {
+      text-align: center;
+      .title {
+        font-size: 20px;
+      }
+    }
+    .form-item {
+      margin: 10px 0;
+    }
+    .form-item.cvcode {
+      display: flex;
+      input {
+        width: 70%;
+      }
+      div {
+        width: 30%;
+      }
+    }
+  }
+}

@@ -1,0 +1,47 @@
+html, body, #root {
+  height: 100%;
+  overflow: hidden;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  font-family: '-apple-system,SF UI Text,Arial,PingFang SC,Hiragino Sans GB,Microsoft YaHei,WenQuanYi Micro Hei,sans-serif';
+}
+
+*::-webkit-scrollbar {/*滚动条整体样式*/
+  width:4px;
+  height:4px;
+}
+  
+*::-webkit-scrollbar-thumb {/*滚动条里面小方块*/
+  border-radius:5px;
+  box-shadow: inset005pxrgba(0,0,0,0.2);
+  background:rgba(0,0,0,0.2);
+}
+*::-webkit-scrollbar-track {/*滚动条里面轨道*/
+  box-shadow: inset005pxrgba(0,0,0,0.2);
+  border-radius:0;
+  background:rgba(0,0,0,0.1);
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.ant-layout-content {
+  overflow-y: scroll;
+}
+
+.global-loading {
+  text-align: center;
+  height: 100%;
+}
+
+.ellipsis{
+  display: inline-block;
+  width: 100%;
+  overflow: hidden;
+  text-overflow:ellipsis;
+  white-space: nowrap;
+}
