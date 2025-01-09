@@ -1,0 +1,20 @@
+function mypall(promiss){ //error
+    let result = [];
+    let index =0;
+    let length = promiss.length;
+    if(!promiss || promiss.length == 0){
+        return Promise.resolve(result); //
+    }
+
+    for(let i=0;i<length;i++){
+        Promise.resolve(promiss[i]).then((data)=>{  //在 .then() 或 .catch() 中使用 return，只是影响这些回调函数的执行，不会返回到外部 mypall 函数。  undefined
+            result.push(data);   //异步push
+            index++;
+            if(index === len) {
+                return Promise.resolve(result);
+            }
+        }).catch((error)=>{
+            return Promise.reject(error); 
+        });
+    }
+}

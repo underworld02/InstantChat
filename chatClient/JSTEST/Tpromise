@@ -1,0 +1,106 @@
+let PENDING = 'pending';
+let FULFILLED = 'fulfilled';
+let REJECTED = 'rejected';
+class myPromise{
+    status = PENDING;
+    value = null;
+    reason = null;
+
+    // onFulFilledCallBack = null;
+    // onRejectedCallBack = null;
+    // onFulfilledCallback = null;
+    onFulfilledCallbacks = [];
+    // 存储失败回调函数
+    // onRejectedCallback = null;
+    onRejectedCallbacks = [];
+
+    constructor (excu){
+        excu(this.resolve,this.reject);
+    }
+
+
+    resolve = (value)=>{
+        this.status = FULFILLED;
+        this.value = value;
+        // this.onFulFilledCallBack && this.onFulFilledCallBack(this.value);
+        while (this.onFulfilledCallbacks.length) {
+            // Array.shift() 取出数组第一个元素，然后（）调用，shift不是纯函数，取出后，数组将失去该元素，直到数组为空
+            this.onFulfilledCallbacks.shift()(value)
+        }
+    }
+    reject = (reason)=>{
+        this.reason = REJECTED;
+        this.reason = reason;
+         // ==== 新增 ====
+        // 判断失败回调是否存在，如果存在就调用
+        // this.onRejectedCallBack && this.onRejectedCallBack(this.reason);
+        while (this.onRejectedCallbacks.length) {
+            this.onRejectedCallbacks.shift()(reason)
+        }
+    }
+
+
+    then(onFulFilled,onRejected){
+        const promise2 = new myPromise((resolve,reject)=>{
+            if(this.status==FULFILLED){
+                const x = onFulFilled(this.value);
+                // // resolvePromise 集中处理，将 promise2 传入
+                // resolvePromise(promise2, x, resolve, reject);
+
+                // 创建一个微任务等待 promise2 完成初始化  我们必须要等 promise2 完成初始化
+                queueMicrotask(() => {  
+                    // 获取成功回调函数的执行结果
+                    const x = onFulfilled(this.value);
+                    // 传入 resolvePromise 集中处理
+                    resolvePromise(promise2, x, resolve, reject);
+                })
+  
+            }
+            else if(this.status==FULFILLED){
+                onRejected(this.reason);
+            }
+            else if(this.status==PENDING){
+                // ==== 新增 ====
+                // 因为不知道后面状态的变化情况，所以将成功回调和失败回调存储起来
+                // 等到执行成功失败函数的时候再传递
+                // this.onFulFilledCallBack = onFulFilled;
+                // this.onRejectedCallBack = onRejected;
+                // 因为不知道后面状态的变化，这里先将成功回调和失败回调存储起来
+                // 等待后续调用
+                this.onFulfilledCallbacks.push(onFulfilled);
+                this.onRejectedCallbacks.push(onRejected);
+            }
+        })
+
+        return promise2; 
+    }
+}
+function resolvePromise(promise2, x, resolve, reject) {
+     // 如果相等了，说明return的是自己，抛出类型错误并返回
+    if (promise2 === x) {
+        return reject(new TypeError('Chaining cycle detected for promise #<Promise>'))
+    }
+
+    // 判断x是不是 MyPromise 实例对象
+    if(x instanceof MyPromise) {
+        // 执行 x，调用 then 方法，目的是将其状态变为 fulfilled 或者 rejected
+        // x.then(value => resolve(value), reason => reject(reason))
+        // 简化之后
+        x.then(resolve, reject)
+    } else{
+        // 普通值
+        resolve(x)
+    }
+}
+
+
+new mypromise((resolve,reject)=>{
+    resolve("Hello");
+}).then((data)=>{
+    console.log("then");
+});
+
+function func(){
+    console.log("dsd");
+}
+let ans = func();

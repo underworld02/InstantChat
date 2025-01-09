@@ -1,0 +1,17 @@
+function deep(obj){
+    if(typeof obj !== "object" || obj == null){
+        return obj;
+    }
+    let res = {};
+    if(Array.isArray(obj)){
+        res = [];
+    }
+    
+
+   for(let key in obj){
+    if(obj.hasOwnProperty(key)){
+        res[key] = deep(obj[key]);
+    }
+   }
+    return res;
+}

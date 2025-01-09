@@ -1,0 +1,18 @@
+Function.prototype.myCall = function (obj = window,...args){
+    if(typeof obj !=="object"){
+        obj = new Object(obj);
+    }
+    let func = this;
+    let temp = Symbol();
+    obj[temp] = func;
+    let res = obj[temp](...args);
+    delete context[temp];
+    return res;
+}
+
+Function.prototype.myCall = Function.prototype.call
+
+Function.prototype.myCall = function (obj,...args){
+    let res = this.apply(obj,args);
+    return res;
+}

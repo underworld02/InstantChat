@@ -1,0 +1,17 @@
+function curry(fn){
+    let fnLength = fn.length;
+    let args = [];
+    function func(...newArgs){
+        args = [
+            ...args,
+            ...newArgs
+        ];
+        if(args.length>=fnLength){
+            fn.apply(this,args.slice(0,fnLength));
+        }
+        else{
+            return func;
+        }
+    }
+    return func;
+}

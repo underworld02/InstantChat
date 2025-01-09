@@ -1,0 +1,21 @@
+function myprase(promiss){
+    
+    return new Promise((resolve,reject)=>{
+        let result = [];
+        let len = promiss.length;
+        if (len ===0){
+             resolve(result);
+             return;
+        }
+
+        for (let i = 0; i<len ; i++){
+            Promise.resolve(promiss[i]).then((data)=>{
+                resolve(data);
+                return;
+            }).catch((err)=>{
+                reject(err);
+                return;
+            });
+        }
+    });
+}

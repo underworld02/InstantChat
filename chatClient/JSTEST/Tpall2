@@ -1,0 +1,21 @@
+function mypall2(promiss){
+    return new Promise((resolve,reject)=>{
+        let result = [];
+        let index = 0;
+        let length = promiss.length;
+        if(length === 0){
+            resolve(result);
+            return;
+        }
+    
+        for(let i=0;i<length;i++){
+            Promise.resolve(promiss[i]).then((data)=>{
+                result.push(data);
+                index++;
+                if(index === len) resolve(result);
+            }).catch((error)=>{
+                reject(err);
+            });
+        }
+    })  
+}

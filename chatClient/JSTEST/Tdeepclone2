@@ -1,0 +1,30 @@
+function deep(obj,map = new WeakMap()){
+    if(obj instanceof Date){
+        return new Date(obj);
+    }
+    if(obj instanceof RegExp){
+        return new RegExp(obj);
+    }
+    if(typeof obj !== "object" || obj == null){
+        return obj;
+    }
+
+    if(map.has(obj)){
+        return map.get(obj);
+    } 
+    
+
+    let res = {}; //let res = new obj.constructor(); // [] {}  // 这波操作相当关键，可以保证对象的原型不丢失！
+    if(Array.isArray(obj)){
+        res = [];
+    }
+
+    map.set(obj,res);
+
+    for(let key in obj){
+        if(obj.hasOwnProperty(key)){
+           res[key] = deep(obj[key],map);
+        }
+    }
+    return res;
+}
